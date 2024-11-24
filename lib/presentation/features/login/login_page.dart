@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_contact/theme/text.dart';
-import 'package:flutter_test_contact/widgets/bc_default.dart';
-import 'package:flutter_test_contact/widgets/space.dart';
-import 'package:flutter_test_contact/widgets/tf_default_title.dart';
+import 'package:flutter_test_contact/presentation/theme/text.dart';
+import 'package:flutter_test_contact/presentation/widgets/bc_default.dart';
+import 'package:flutter_test_contact/presentation/widgets/space.dart';
+import 'package:flutter_test_contact/presentation/widgets/tf_default_title.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
