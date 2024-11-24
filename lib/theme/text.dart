@@ -14,6 +14,8 @@ TextStyle whiteTextStyle = GoogleFonts.poppins(color: colorWhite);
 TextStyle greyTextStyle = GoogleFonts.poppins(color: colorTextGrey);
 TextStyle grey2TextStyle =
     GoogleFonts.poppins(color: colorBlack.withOpacity(0.59));
+TextStyle greyHintTextStyle =
+    GoogleFonts.poppins(color: colorBlack.withOpacity(0.3));
 
 FontWeight light = FontWeight.w300;
 FontWeight regular = FontWeight.w400;
