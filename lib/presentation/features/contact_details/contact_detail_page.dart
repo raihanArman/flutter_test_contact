@@ -98,7 +98,10 @@ class ContactDetailsBody extends StatelessWidget {
                           size: 100,
                           fontSize: 40,
                         )
-                      : const AvatarIcon(icon: "contact.svg"),
+                      : const AvatarIcon(
+                          icon: "contact.svg",
+                          size: 100,
+                        ),
                   verticalSpace(30),
                   const InformationDivider(title: "Main Information"),
                   TFDefaultTitle(
@@ -122,6 +125,7 @@ class ContactDetailsBody extends StatelessWidget {
                     title: "Email",
                     hintText: "Enter email",
                     formController: bloc.emailController,
+                    textInputType: TextInputType.emailAddress,
                     prefixIcon: "email.svg",
                   ),
                   verticalSpace(16),

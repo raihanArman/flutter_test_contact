@@ -21,7 +21,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoading());
     try {
       final contacts = await useCase.call(NoParams());
-      log("Ampas kuda -> onFetch $contacts");
       emit(HomeLoaded(contacts));
     } catch (e) {
       emit(HomeError('Failed to load contacts: $e'));
@@ -30,14 +29,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onSearchContacts(
       SearchContacts event, Emitter<HomeState> emit) async {
-    log("Ampas kuda -> panggli onSearch $state");
     if (state is HomeLoaded) {
       final stateLoaded = state as HomeLoaded;
 
-      // Pencarian dengan query kosong harus kembali ke HomeLoaded
       if (event.query.isEmpty) {
-        emit(HomeLoaded(
-            stateLoaded.contacts)); // Pastikan kontak asli dikembalikan
+        emit(HomeLoaded(stateLoaded.contacts));
       } else {
         final filteredContacts = stateLoaded.contacts
             .where((contact) => contact.firstName
@@ -54,7 +50,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final stateLoaded = state as HomeSearchResults;
 
       if (event.query.isEmpty) {
-        // Kembalikan ke HomeLoaded dengan kontak lengkap
         emit(HomeLoaded(stateLoaded.allContacts));
       } else {
         final filteredContacts = stateLoaded.allContacts

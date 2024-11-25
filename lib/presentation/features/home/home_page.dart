@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
                 ),
                 verticalSpace(16),
                 Expanded(
-                  child: _getStateWidget(state), // Handle different states
+                  child: _getStateWidget(state),
                 ),
               ],
             ),
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
           tooltip: 'Increment',
           backgroundColor: colorPrimary,
           child: const Icon(Icons.add),
-        ), // This,
+        ),
       ),
     );
   }

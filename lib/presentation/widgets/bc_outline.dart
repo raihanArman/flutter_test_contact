@@ -22,8 +22,8 @@ class BcOutline extends StatelessWidget {
       titleButton: titleButton,
       showLoading: showLoading,
       backgroundColorButton: Colors.white,
-      colorText: borderColor, // Outline text color
-      colorProgress: borderColor, // Loading indicator color
+      colorText: borderColor,
+      colorProgress: borderColor,
       onTap: onTap,
       isButtonActive: isButtonActive,
       borderColor: borderColor,

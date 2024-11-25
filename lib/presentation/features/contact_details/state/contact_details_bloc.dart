@@ -60,7 +60,6 @@ class ContactDetailBloc extends Bloc<ContactDetailEvent, ContactDetailState> {
   ) async {
     emit(ContactDetailLoading());
 
-    // Validasi input
     if (firstNameController.text.trim().isEmpty) {
       emit(ContactDetailError("First Name is mandatory."));
       return;
@@ -70,7 +69,6 @@ class ContactDetailBloc extends Bloc<ContactDetailEvent, ContactDetailState> {
       return;
     }
 
-    // Membuat objek Contact
     final contact = Contact(
       id: event.contact?.id ?? randomString(10),
       firstName: firstNameController.text.trim(),

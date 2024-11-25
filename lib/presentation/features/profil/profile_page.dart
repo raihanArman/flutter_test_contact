@@ -111,7 +111,6 @@ class ProfileBody extends StatelessWidget {
                         ),
                       );
 
-                      // Refresh hanya jika ada perubahan di ContactDetailPage
                       if (result == true) {
                         context.read<ProfileBloc>().add(FetchProfile());
                       }

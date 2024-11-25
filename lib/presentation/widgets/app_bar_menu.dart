@@ -23,14 +23,14 @@ class AppBarMenu extends StatelessWidget implements PreferredSizeWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
             blurRadius: 20,
             spreadRadius: 0,
           ),
         ],
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

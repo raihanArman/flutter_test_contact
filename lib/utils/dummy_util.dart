@@ -140,7 +140,6 @@ List<Map<String, dynamic>> dummy = [
 List<Contact> dummyContacts() {
   List<Contact> contacts = [];
   for (var data in dummy) {
-    // Convert map to ContactEntity
     var contact = Contact(
       id: data['id'],
       firstName: data['firstName'],

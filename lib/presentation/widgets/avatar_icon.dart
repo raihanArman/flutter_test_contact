@@ -18,7 +18,7 @@ class AvatarIcon extends StatelessWidget {
     return AvatarDefault(
         size: size,
         widget: Center(
-          child: buildSvgIcon(icon, width: 40, height: 40),
+          child: buildSvgIcon(icon, width: 40, height: 40, color: Colors.white),
         ));
   }
 }
