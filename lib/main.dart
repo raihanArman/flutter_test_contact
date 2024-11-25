@@ -4,9 +4,9 @@ import 'package:flutter_test_contact/domain/usecase/check_is_login_usecase.dart'
 import 'package:flutter_test_contact/domain/usecase/insert_dummy_data_usecase.dart';
 import 'package:flutter_test_contact/domain/usecase/params/params.dart';
 import 'package:flutter_test_contact/libraries/database/entity/contact_entity.dart';
+import 'package:flutter_test_contact/presentation/features/dashboard/dashboard_page.dart';
 import 'package:flutter_test_contact/presentation/features/home/home_page.dart';
 import 'package:flutter_test_contact/presentation/features/login/login_page.dart';
-import 'package:flutter_test_contact/presentation/features/profil/profile_page.dart';
 import 'package:flutter_test_contact/utils/dummy_util.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       home: SafeArea(
-        child: isLoggedIn ? const HomePage() : const LoginPage(),
+        child: isLoggedIn ? const DashboardPage() : const LoginPage(),
       ),
     );
   }
