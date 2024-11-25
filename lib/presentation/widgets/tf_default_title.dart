@@ -12,6 +12,7 @@ class TFDefaultTitle extends StatelessWidget {
   final TextInputType? textInputType;
   final bool isMandatory;
   final bool isReadOnly;
+  final Function(String)? onChanged;
 
   const TFDefaultTitle({
     super.key,
@@ -22,6 +23,7 @@ class TFDefaultTitle extends StatelessWidget {
     this.prefixIcon,
     this.isMandatory = false,
     this.isReadOnly = false,
+    this.onChanged,
   });
 
   @override
@@ -45,7 +47,11 @@ class TFDefaultTitle extends StatelessWidget {
           hintText: hintText,
           prefixIcon: prefixIcon,
           isReadOnly: isReadOnly,
-          onChanged: (value) {},
+          onChanged: (value) {
+            if (onChanged != null) {
+              onChanged!(value);
+            }
+          },
         ),
       ],
     );

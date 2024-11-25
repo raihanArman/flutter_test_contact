@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_contact/domain/models/contact.dart';
@@ -18,7 +16,6 @@ import 'package:flutter_test_contact/presentation/widgets/bc_default.dart';
 import 'package:flutter_test_contact/presentation/widgets/bc_outline.dart';
 import 'package:flutter_test_contact/presentation/widgets/space.dart';
 import 'package:flutter_test_contact/presentation/widgets/tf_default_title.dart';
-import 'package:flutter_test_contact/utils/string_util.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
@@ -64,151 +61,117 @@ class ContactDetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController firstNameController = TextEditingController();
-    TextEditingController lastNameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController dobController = TextEditingController();
+    final bloc = context.read<ContactDetailBloc>();
 
-    firstNameController.text = contact?.firstName ?? "";
-    lastNameController.text = contact?.lastName ?? "";
-    emailController.text = contact?.email ?? "";
-    dobController.text = contact?.dob ?? "";
+    if (contact != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        bloc.add(UpdateContactField(
+            fieldName: 'firstName', fieldValue: contact!.firstName));
+        bloc.add(UpdateContactField(
+            fieldName: 'lastName', fieldValue: contact!.lastName));
+        bloc.add(UpdateContactField(
+            fieldName: 'email', fieldValue: contact!.email ?? ''));
+        bloc.add(UpdateContactField(
+            fieldName: 'dob', fieldValue: contact!.dob ?? ''));
+      });
+    }
 
-    return Scaffold(
-      appBar: AppBarMenu(
-        title: "Contact Details",
-        onBack: () {
-          Navigator.pop(context, false);
-        },
-      ),
-      body: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                verticalSpace(30),
-                contact != null
-                    ? AvatarContact(
-                        name: contact!.fullname(),
-                        size: 100,
-                        fontSize: 40,
-                      )
-                    : const AvatarIcon(icon: "contact.svg"),
-                verticalSpace(30),
-                const InformationDivider(title: "Main Information"),
-                TFDefaultTitle(
-                  title: "First Name",
-                  hintText: "Enter first name",
-                  formController: firstNameController,
-                  prefixIcon: "contact.svg",
-                  isMandatory: true,
-                ),
-                verticalSpace(16),
-                TFDefaultTitle(
-                  title: "Last Name",
-                  hintText: "Enter last name",
-                  formController: lastNameController,
-                  prefixIcon: "contact.svg",
-                  isMandatory: true,
-                ),
-                verticalSpace(36),
-                const InformationDivider(title: "Sub Information"),
-                TFDefaultTitle(
-                  title: "Email",
-                  hintText: "Enter email",
-                  formController: emailController,
-                  prefixIcon: "email.svg",
-                ),
-                verticalSpace(16),
-                InkWell(
-                  onTap: () async {
-                    log("Ampas kuda -> onTap dob");
-                    DateTime? selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: contact?.dob != null
-                          ? DateFormat('dd/MM/yyyy')
-                              .parse(contact!.dob!) // Menggunakan dob jika ada
-                          : DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
-                    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBarMenu(
+          title: "Contact Details",
+          onBack: () {
+            Navigator.pop(context, false);
+          },
+        ),
+        body: Container(
+          color: Colors.white,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  verticalSpace(30),
+                  contact != null
+                      ? AvatarContact(
+                          name: "${contact!.firstName} ${contact!.lastName}",
+                          size: 100,
+                          fontSize: 40,
+                        )
+                      : const AvatarIcon(icon: "contact.svg"),
+                  verticalSpace(30),
+                  const InformationDivider(title: "Main Information"),
+                  TFDefaultTitle(
+                    title: "First Name",
+                    hintText: "Enter first name",
+                    formController: bloc.firstNameController,
+                    prefixIcon: "contact.svg",
+                    isMandatory: true,
+                  ),
+                  verticalSpace(16),
+                  TFDefaultTitle(
+                    title: "Last Name",
+                    hintText: "Enter last name",
+                    formController: bloc.lastNameController,
+                    prefixIcon: "contact.svg",
+                    isMandatory: true,
+                  ),
+                  verticalSpace(36),
+                  const InformationDivider(title: "Sub Information"),
+                  TFDefaultTitle(
+                    title: "Email",
+                    hintText: "Enter email",
+                    formController: bloc.emailController,
+                    prefixIcon: "email.svg",
+                  ),
+                  verticalSpace(16),
+                  InkWell(
+                    onTap: () async {
+                      DateTime? selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: bloc.dobController.text.isNotEmpty
+                            ? DateFormat('dd/MM/yyyy')
+                                .parse(bloc.dobController.text)
+                            : DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
 
-                    if (selectedDate != null) {
-                      // Format tanggal dan atur ke controller
-                      String formattedDate =
-                          DateFormat('dd/MM/yyyy').format(selectedDate);
-                      dobController.text = formattedDate;
-                    }
-                  },
-                  child: IgnorePointer(
-                    child: TFDefaultTitle(
-                      title: "Date of Birth",
-                      hintText: "Enter birthday",
-                      formController: dobController,
-                      prefixIcon: "date.svg",
-                      isReadOnly: true,
+                      if (selectedDate != null) {
+                        bloc.dobController.text =
+                            DateFormat('dd/MM/yyyy').format(selectedDate);
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: TFDefaultTitle(
+                        title: "Date of Birth",
+                        hintText: "Enter birthday",
+                        formController: bloc.dobController,
+                        prefixIcon: "date.svg",
+                        isReadOnly: true,
+                      ),
                     ),
                   ),
-                ),
-                verticalSpace(30),
-                BcDefault(
-                  titleButton: contact != null ? "Update" : "Save",
-                  onTap: () {
-                    if (firstNameController.text.trim().isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("First Name is mandatory."),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
-
-                    if (lastNameController.text.trim().isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Last Name is mandatory."),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
-
-                    final contactToSave = Contact(
-                      id: contact?.id ?? randomString(10),
-                      firstName: firstNameController.text,
-                      lastName: lastNameController.text,
-                      email: emailController.text,
-                      dob: dobController.text,
-                    );
-
-                    if (contact != null) {
-                      context.read<ContactDetailBloc>().add(
-                            UpdateContact(contactToSave),
-                          );
-                    } else {
-                      context.read<ContactDetailBloc>().add(
-                            CreateContact(contactToSave),
-                          );
-                    }
-                  },
-                ),
-                verticalSpace(16),
-                contact != null
-                    ? BcOutline(
-                        titleButton: "Remove",
-                        borderColor: colorRed,
-                        onTap: () {
-                          context.read<ContactDetailBloc>().add(
-                                DeleteContact(contact!.id),
-                              );
-                        },
-                      )
-                    : const SizedBox(),
-                verticalSpace(30),
-              ],
+                  verticalSpace(30),
+                  BcDefault(
+                    titleButton: contact != null ? "Update" : "Save",
+                    onTap: () {
+                      bloc.add(SubmitContactForm(contact: contact));
+                    },
+                  ),
+                  verticalSpace(16),
+                  contact != null
+                      ? BcOutline(
+                          titleButton: "Remove",
+                          borderColor: colorRed,
+                          onTap: () {
+                            bloc.add(DeleteContact(contact!.id));
+                          },
+                        )
+                      : const SizedBox(),
+                  verticalSpace(30),
+                ],
+              ),
             ),
           ),
         ),

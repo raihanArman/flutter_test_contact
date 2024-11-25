@@ -36,4 +36,20 @@ class Contact {
       dob: dob,
     );
   }
+
+  Contact copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? dob,
+  }) {
+    return Contact(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      dob: dob ?? this.dob,
+    );
+  }
 }

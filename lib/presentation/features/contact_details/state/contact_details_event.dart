@@ -19,3 +19,16 @@ class DeleteContact extends ContactDetailEvent {
 
   DeleteContact(this.contactId);
 }
+
+class UpdateContactField extends ContactDetailEvent {
+  final String fieldName;
+  final String fieldValue;
+
+  UpdateContactField({required this.fieldName, required this.fieldValue});
+}
+
+class SubmitContactForm extends ContactDetailEvent {
+  final Contact? contact;
+
+  SubmitContactForm({this.contact});
+}

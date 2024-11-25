@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_contact/domain/usecase/get_contact_by_userid_usecase.dart';
 import 'package:flutter_test_contact/domain/usecase/save_session_usecase.dart';
@@ -10,6 +11,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final GetContactByUserIdUseCase getContactByUserIdUseCase;
   final SaveSessionLoginUseCase saveSessionLoginUseCase;
 
+  TextEditingController loginController = TextEditingController();
+
   LoginBloc({
     required this.getContactByUserIdUseCase,
     required this.saveSessionLoginUseCase,
@@ -17,11 +20,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginRequested>(_onLogin);
   }
 
+  @override
+  Future<void> close() {
+    loginController.dispose();
+    return super.close();
+  }
+
   Future<void> _onLogin(LoginRequested event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
 
     try {
-      final contact = await getContactByUserIdUseCase.call(event.userId);
+      final userId = loginController.text.trim();
+
+      if (userId.isEmpty) {
+        emit(LoginFailure(message: "Please enter a User ID"));
+        return;
+      }
+
+      final contact = await getContactByUserIdUseCase.call(userId);
 
       if (contact != null) {
         await saveSessionLoginUseCase.call(contact.id);

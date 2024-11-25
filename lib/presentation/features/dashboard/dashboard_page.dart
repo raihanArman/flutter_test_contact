@@ -39,15 +39,13 @@ class DashboardPage extends StatelessWidget {
         ),
         body: BlocBuilder<DashboardBloc, DashboardState>(
           builder: (context, state) {
-            // Return the page based on the selected index
-            switch (state.index) {
-              case 0:
-                return const HomePage();
-              case 1:
-                return const ProfilePage();
-              default:
-                return const HomePage();
-            }
+            return IndexedStack(
+              index: state.index,
+              children: const [
+                HomePage(key: PageStorageKey('HomePage')),
+                ProfilePage(key: PageStorageKey('ProfilePage')),
+              ],
+            );
           },
         ),
       ),
