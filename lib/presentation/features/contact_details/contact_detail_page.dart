@@ -78,7 +78,7 @@ class ContactDetailsBody extends StatelessWidget {
       appBar: AppBarMenu(
         title: "Contact Details",
         onBack: () {
-          Navigator.pop(context, true);
+          Navigator.pop(context, false);
         },
       ),
       body: Container(
@@ -156,6 +156,26 @@ class ContactDetailsBody extends StatelessWidget {
                 BcDefault(
                   titleButton: contact != null ? "Update" : "Save",
                   onTap: () {
+                    if (firstNameController.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("First Name is mandatory."),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    if (lastNameController.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Last Name is mandatory."),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
                     final contactToSave = Contact(
                       id: contact?.id ?? randomString(10),
                       firstName: firstNameController.text,

@@ -123,7 +123,7 @@ class ProfileBody extends StatelessWidget {
           } else if (state is ProfileError) {
             return Center(child: Text(state.message));
           } else {
-            return const Center(child: Text("No profile data available."));
+            return const SizedBox();
           }
         },
       ),
