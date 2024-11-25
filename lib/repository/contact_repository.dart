@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_test_contact/libraries/database/database_manager_interface.dart';
 import 'package:flutter_test_contact/repository/contact_repository_interface.dart';
 import 'package:flutter_test_contact/repository/models/contact_model.dart';
@@ -40,8 +38,6 @@ class ContactRepository extends ContactRepositoryInterface {
   Future<List<ContactModel>> fetchAllContacts() async {
     try {
       final entities = await databaseManager.getListContact();
-
-      log("Ampas kuda -> fetchAllContacts $entities");
       return entities.map((entity) => ContactModel.fromEntity(entity)).toList();
     } catch (e) {
       throw Exception('Failed to fetch contacts: $e');

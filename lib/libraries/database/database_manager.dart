@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_test_contact/libraries/database/database_manager_interface.dart';
 import 'package:flutter_test_contact/libraries/database/entity/contact_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -50,7 +48,6 @@ class DatabaseManager extends DatabaseManagerInterface {
   Future<void> createContacts(List<ContactEntity> contacts) async {
     var box = await _openBox();
     for (var contact in contacts) {
-      log("Ampas kuda -> list ontact -> ${contact.firstName}");
       await box.put(contact.id, contact);
     }
   }
@@ -72,7 +69,6 @@ class DatabaseManager extends DatabaseManagerInterface {
       }
       return null;
     } catch (e) {
-      log("Error fetching contact by phone number: $e");
       rethrow;
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_contact/domain/models/contact.dart';
@@ -59,6 +61,7 @@ class ContactDetailBloc extends Bloc<ContactDetailEvent, ContactDetailState> {
     Emitter<ContactDetailState> emit,
   ) async {
     emit(ContactDetailLoading());
+    log("Ampas kuda -> lewat sini");
 
     if (firstNameController.text.trim().isEmpty) {
       emit(ContactDetailError("First Name is mandatory."));
