@@ -55,7 +55,18 @@ class HomePage extends StatelessWidget {
           );
         }),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ContactDetailPage(),
+              ),
+            );
+
+            if (result == true) {
+              context.read<HomeBloc>().add(FetchContacts());
+            }
+          },
           tooltip: 'Increment',
           backgroundColor: colorPrimary,
           child: const Icon(Icons.add),
@@ -124,14 +135,17 @@ class HomePage extends StatelessWidget {
             ...contactsInGroup.map((contact) {
               return ContactItem(
                 contact: contact,
-                onClick: (contact) {
-                  Navigator.push(
+                onClick: (contact) async {
+                  final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => ContactDetailPage(
-                              contact: contact,
-                            )),
+                      builder: (_) => ContactDetailPage(contact: contact),
+                    ),
                   );
+
+                  if (result == true) {
+                    context.read<HomeBloc>().add(FetchContacts());
+                  }
                 },
               );
             }).toList(),

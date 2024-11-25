@@ -5,7 +5,6 @@ import 'package:flutter_test_contact/domain/usecase/insert_dummy_data_usecase.da
 import 'package:flutter_test_contact/domain/usecase/params/params.dart';
 import 'package:flutter_test_contact/libraries/database/entity/contact_entity.dart';
 import 'package:flutter_test_contact/presentation/features/dashboard/dashboard_page.dart';
-import 'package:flutter_test_contact/presentation/features/home/home_page.dart';
 import 'package:flutter_test_contact/presentation/features/login/login_page.dart';
 import 'package:flutter_test_contact/utils/dummy_util.dart';
 import 'package:get_it/get_it.dart';
