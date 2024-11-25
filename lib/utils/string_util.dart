@@ -1,3 +1,5 @@
+import 'dart:math';
+
 String getInitials(String name) {
   // Pisahkan nama berdasarkan spasi
   List<String> words = name.split(' ');
@@ -9,4 +11,13 @@ String getInitials(String name) {
   return initials.length > 2
       ? initials.substring(0, 2).toUpperCase()
       : initials.toUpperCase();
+}
+
+String randomString(int length) {
+  const characters =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  final random = Random();
+
+  return List.generate(
+      length, (index) => characters[random.nextInt(characters.length)]).join();
 }

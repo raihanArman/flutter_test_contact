@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_contact/presentation/features/profil/profil_page.dart';
+import 'package:flutter_test_contact/presentation/features/profil/profile_page.dart';
 import 'package:flutter_test_contact/presentation/theme/color.dart';
 import 'package:flutter_test_contact/utils/svg_util.dart';
 
@@ -11,7 +11,7 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.01),
       bottomNavigationBar: bottomNavigationBar(),
-      body: ProfilPage(),
+      body: ProfilePage(),
     );
   }
 

@@ -8,9 +8,10 @@ class TFDefaultTitle extends StatelessWidget {
   final String title;
   final String hintText;
   final String? prefixIcon;
-  final TextEditingController formController;
+  final TextEditingController? formController;
   final TextInputType? textInputType;
   final bool isMandatory;
+  final bool isReadOnly;
 
   const TFDefaultTitle({
     super.key,
@@ -20,6 +21,7 @@ class TFDefaultTitle extends StatelessWidget {
     this.textInputType = TextInputType.text,
     this.prefixIcon,
     this.isMandatory = false,
+    this.isReadOnly = false,
   });
 
   @override
@@ -42,6 +44,8 @@ class TFDefaultTitle extends StatelessWidget {
           formController: formController,
           hintText: hintText,
           prefixIcon: prefixIcon,
+          isReadOnly: isReadOnly,
+          onChanged: (value) {},
         ),
       ],
     );

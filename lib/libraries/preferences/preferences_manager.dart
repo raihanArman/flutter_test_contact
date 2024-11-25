@@ -21,10 +21,18 @@ class PreferencesManager extends PreferencesManagerInterface {
   }
 
   @override
-  void setLoginSession(bool isLogin) async {
+  void setLoginSession(String contactData) async {
     if (_prefs == null) {
       await initializeSharedPref();
     }
-    await _prefs!.setBool(StringSharedPref.loginSession, isLogin);
+    await _prefs!.setString(StringSharedPref.loginSession, contactData);
+  }
+
+  @override
+  Future<String?> getLoginSession() async {
+    if (_prefs == null) {
+      await initializeSharedPref();
+    }
+    return _prefs!.getString(StringSharedPref.loginSession);
   }
 }

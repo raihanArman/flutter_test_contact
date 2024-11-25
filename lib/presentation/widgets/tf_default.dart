@@ -6,17 +6,21 @@ import 'package:flutter_test_contact/utils/svg_util.dart';
 class TFDefault extends StatelessWidget {
   final String hintText;
   final String? prefixIcon;
-  final TextEditingController formController;
+  final TextEditingController? formController;
   final TextInputType? textInputType;
   final String? suffixIcon;
+  final bool isReadOnly;
+  final Function(String) onChanged;
 
   const TFDefault({
     super.key,
     required this.hintText,
-    required this.formController,
+    this.formController,
     this.textInputType = TextInputType.text,
     this.prefixIcon,
     this.suffixIcon,
+    this.isReadOnly = false,
+    required this.onChanged,
   });
 
   @override
@@ -24,31 +28,32 @@ class TFDefault extends StatelessWidget {
     return SizedBox(
       height: 53,
       child: TextFormField(
-        keyboardType: textInputType,
-        controller: formController,
-        cursorColor: colorPrimary,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 16),
-          filled: true,
-          fillColor: colorWhite,
-          hintText: hintText,
-          hintStyle: greyHintTextStyle.copyWith(fontSize: 14),
-          enabledBorder: border(false),
-          focusedBorder: border(true),
-          prefixIcon: prefixIcon != null
-              ? Align(
-                  widthFactor: 1,
-                  heightFactor: 1,
-                  child: buildSvgIcon(prefixIcon!))
-              : null,
-          suffixIcon: suffixIcon != null
-              ? Align(
-                  widthFactor: 1,
-                  heightFactor: 1,
-                  child: buildSvgIcon(suffixIcon!))
-              : null,
-        ),
-      ),
+          keyboardType: textInputType,
+          controller: formController,
+          cursorColor: colorPrimary,
+          readOnly: isReadOnly,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            filled: true,
+            fillColor: colorWhite,
+            hintText: hintText,
+            hintStyle: greyHintTextStyle.copyWith(fontSize: 14),
+            enabledBorder: border(false),
+            focusedBorder: border(true),
+            prefixIcon: prefixIcon != null
+                ? Align(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: buildSvgIcon(prefixIcon!))
+                : null,
+            suffixIcon: suffixIcon != null
+                ? Align(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: buildSvgIcon(suffixIcon!))
+                : null,
+          ),
+          onChanged: onChanged),
     );
   }
 

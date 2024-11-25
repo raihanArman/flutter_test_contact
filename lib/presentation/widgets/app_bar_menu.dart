@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_contact/presentation/widgets/space.dart';
+import 'package:flutter_test_contact/utils/svg_util.dart';
 
 class AppBarMenu extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget? suffix;
+  final Function()? onBack;
   const AppBarMenu({
     super.key,
     required this.title,
     this.suffix,
+    this.onBack,
   });
 
   @override
@@ -28,17 +32,28 @@ class AppBarMenu extends StatelessWidget implements PreferredSizeWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            onBack != null
+                ? Row(
+                    children: [
+                      InkWell(
+                        onTap: onBack!,
+                        child: buildSvgIcon("back.svg"),
+                      ),
+                      horizontalSpace(16),
+                    ],
+                  )
+                : const SizedBox(),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
+            Spacer(),
             if (suffix != null) suffix!
           ],
         ),
