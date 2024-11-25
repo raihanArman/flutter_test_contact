@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test_contact/domain/usecase/fetch_contact_usecase.dart';
 import 'package:flutter_test_contact/domain/usecase/get_contact_by_userid_usecase.dart';
 import 'package:flutter_test_contact/domain/usecase/save_session_usecase.dart';
 import 'package:flutter_test_contact/presentation/features/home/home_page.dart';
@@ -82,8 +81,7 @@ class LoginBody extends StatelessWidget {
                         .add(LoginRequested(userId: userId));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text("Please enter a valid phone number")),
+                      const SnackBar(content: Text("Please enter a User ID")),
                     );
                   }
                 },
