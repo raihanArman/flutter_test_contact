@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_contact/domain/usecase/get_contact_by_userid_usecase.dart';
 import 'package:flutter_test_contact/domain/usecase/get_session_usecase.dart';
 import 'package:flutter_test_contact/domain/usecase/save_session_usecase.dart';
+import 'package:flutter_test_contact/presentation/features/contact_details/contact_detail_page.dart';
 import 'package:flutter_test_contact/presentation/features/login/login_page.dart';
 import 'package:flutter_test_contact/presentation/features/profil/state/profile_bloc.dart';
 import 'package:flutter_test_contact/presentation/features/profil/state/profile_event.dart';
@@ -99,7 +100,22 @@ class ProfileBody extends StatelessWidget {
                   verticalSpace(24),
                   BcDefault(
                     titleButton: "Update my detail",
-                    onTap: () {},
+                    onTap: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ContactDetailPage(
+                              contact: (context.read<ProfileBloc>().state
+                                      as ProfileLoaded)
+                                  .contact),
+                        ),
+                      );
+
+                      // Refresh hanya jika ada perubahan di ContactDetailPage
+                      if (result == true) {
+                        context.read<ProfileBloc>().add(FetchProfile());
+                      }
+                    },
                   ),
                 ],
               ),

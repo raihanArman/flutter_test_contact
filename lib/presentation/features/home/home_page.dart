@@ -181,11 +181,6 @@ class ContactItem extends StatelessWidget {
                 contact.fullname(),
                 style: grey2TextStyle.copyWith(fontSize: 15),
               ),
-              horizontalSpace(10),
-              Text(
-                "(You)",
-                style: darkGreyTextStyle.copyWith(fontSize: 15),
-              ),
             ],
           ),
           verticalSpace(20),
